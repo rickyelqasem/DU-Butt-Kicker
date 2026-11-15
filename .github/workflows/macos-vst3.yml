@@ -8,8 +8,10 @@ jobs:
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
+      - name: Fetch JUCE 8.0.12
+        run: git clone --depth 1 --branch 8.0.12 https://github.com/juce-framework/JUCE.git "$RUNNER_TEMP/JUCE"
       - name: Build and test universal VST3
-        run: sh build-macos.sh
+        run: JUCE_DIR="$RUNNER_TEMP/JUCE" sh build-macos.sh
       - name: Upload VST3
         uses: actions/upload-artifact@v4
         with:
